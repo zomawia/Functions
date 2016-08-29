@@ -17,20 +17,31 @@
 
 
 #include <iostream>
+#include <cstdlib>
+#include <time.h>
+
+int randomRange(int start, int end)
+{
+	srand(time(0)); // seeding
+	return (rand() % (end - start + 1) + start);
+
+}
 
 int compHand()
 {
-	if (rand() % 3 == 0)
+	int choice = randomRange(1, 3);
+	
+	if (choice == 3)
 	{
 		printf("Computer chooses scissors.\n\n");
 		return 3;
 	}
-	else if (rand() % 2 == 0)
+	else if (choice == 2)
 	{
 		printf("Computer chooses paper.\n\n");
 		return 2;
 	}
-	else
+	else if (choice == 1)
 	{
 		printf("Computer chooses rock.\n\n");
 		return 1;
@@ -49,12 +60,10 @@ bool decideWinner(int comp, int player)
 {
 		// rock beats scissors
 		if ( (comp == 1 && player == 3) ||
-			(player == 3 && comp == 1) )
+			(comp == 3 && player == 1) )
 		{
 			if (comp == 1) printf("Rock beats your scissors. You lose.\n\n");
-			else printf("Rock beats their scissors. You win.\n\n");
-
-			
+			else printf("Rock beats their scissors. You win.\n\n");			
 		}
 
 		// scissors beats paper
@@ -62,9 +71,7 @@ bool decideWinner(int comp, int player)
 			(comp == 2 && player == 3))
 		{
 			if (comp == 3) printf("Scissors beats your paper. You lose.\n\n");
-			else printf("Scissors beats their paper. You win.\n\n");
-			
-			
+			else printf("Scissors beats their paper. You win.\n\n");			
 		}
 
 		// paper beats rock
@@ -101,6 +108,10 @@ int main()
 	{
 		playerHand = decideHand();
 		compDecision = compHand();
+
+		//debug
+		//printf("***\nYour hand: %d, Computer: %d\n***\n\n", playerHand, compDecision);
+
 		IsGameTied = decideWinner(compDecision, playerHand);
 	}
 
